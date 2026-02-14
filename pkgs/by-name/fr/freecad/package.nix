@@ -55,13 +55,14 @@ in
 freecad-utils.makeCustomizable (
   stdenv.mkDerivation (finalAttrs: {
     pname = "freecad";
-    version = "1.0.2";
+    version = "1.1.0-weekly-2026.02.11";
 
     src = fetchFromGitHub {
       owner = "FreeCAD";
       repo = "FreeCAD";
-      tag = finalAttrs.version;
-      hash = "sha256-J//O/ABMFa3TFYwR0wc8d1UTA5iSFnEP2thOjuCN+uE=";
+      # tag = finalAttrs.version;
+      tag = "weekly-2026.02.11";
+      hash = "sha256-Bc9rCZPNFpLzbQnZE6qKg8pZPQfLMnUj3e2hvPraDF4=";
       fetchSubmodules = true;
     };
 
@@ -100,14 +101,14 @@ freecad-utils.makeCustomizable (
 
     patches = [
       ./0001-NIXOS-don-t-ignore-PYTHONPATH.patch
-      ./0002-FreeCad-OndselSolver-pkgconfig.patch
+      # ./0002-FreeCad-OndselSolver-pkgconfig.patch
 
       # https://github.com/FreeCAD/FreeCAD/pull/21710
-      ./0003-FreeCad-fix-font-load-crash.patch
-      (fetchpatch {
-        url = "https://github.com/FreeCAD/FreeCAD/commit/8e04c0a3dd9435df0c2dec813b17d02f7b723b19.patch?full_index=1";
-        hash = "sha256-H6WbJFTY5/IqEdoi5N+7D4A6pVAmZR4D+SqDglwS18c=";
-      })
+      # ./0003-FreeCad-fix-font-load-crash.patch
+      # (fetchpatch {
+      #   url = "https://github.com/FreeCAD/FreeCAD/commit/8e04c0a3dd9435df0c2dec813b17d02f7b723b19.patch?full_index=1";
+      #   hash = "sha256-H6WbJFTY5/IqEdoi5N+7D4A6pVAmZR4D+SqDglwS18c=";
+      # })
       # Inform Coin to use EGL when on Wayland
       # https://github.com/FreeCAD/FreeCAD/pull/21917
       (fetchpatch {
@@ -117,8 +118,8 @@ freecad-utils.makeCustomizable (
     ];
 
     postPatch = ''
-      substituteInPlace src/Mod/Fem/femmesh/gmshtools.py \
-        --replace-fail 'self.gmsh_bin = "gmsh"' 'self.gmsh_bin = "${lib.getExe gmsh}"'
+      # substituteInPlace src/Mod/Fem/femmesh/gmshtools.py \
+      #   --replace-fail 'self.gmsh_bin = "gmsh"' 'self.gmsh_bin = "${lib.getExe gmsh}"'
     '';
 
     cmakeFlags = [
